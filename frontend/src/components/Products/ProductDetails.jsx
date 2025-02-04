@@ -39,14 +39,14 @@ const similarProducts = [
     altText: "Product 2 ",
   },
   {
-    _id: 1,
+    _id: 3,
     name: "Product 3",
     price: 100,
     images: [{ url: "https://picsum.photos/500/500?random=3" }],
     altText: "Product 3",
   },
   {
-    _id: 1,
+    _id: 4,
     name: "Product 4",
     price: 100,
     altText: "Product 4",

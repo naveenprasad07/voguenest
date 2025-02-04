@@ -149,7 +149,7 @@ const NewArrivals = () => {
   }, []);
 
   return (
-    <section className="py-16 px-4 lg:px-0">
+    <section className="py-16 px-2 lg:px-0">
       <div className="container mx-auto text-center mb-10 relative">
         <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
         <p className="text-lg text-gray-600 mb-8">
@@ -161,7 +161,7 @@ const NewArrivals = () => {
           <button
             className={`p-2 rounded-full border ${
               canScrollLeft
-                ? "bg-white text-black cursor-pointer"
+                ? "bg-white text-black "
                 : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }`}
             onClick={() => scroll("left")}
@@ -172,7 +172,7 @@ const NewArrivals = () => {
           <button
             className={`p-2 rounded-full border ${
               canScrollRight
-                ? "bg-white text-black cursor-pointer"
+                ? "bg-white text-black "
                 : "bg-gray-200 text-gray-400  cursor-not-allowed"
             }`}
             disabled={!canScrollRight}

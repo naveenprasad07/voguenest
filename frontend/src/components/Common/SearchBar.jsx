@@ -50,7 +50,7 @@ const SearchBar = () => {
           </button>
         </form>
       ) : (
-        <button onClick={handleSearchToggle} className="cursor-pointer">
+        <button onClick={handleSearchToggle}>
           <HiMagnifyingGlass className="h-6 w-6 cursor-pointer" />
         </button>
       )}

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import ProductGrid from "./ProductGrid";
 
 const selectedProduct = {
   name: "Stylish Jacket",
@@ -21,13 +23,69 @@ const selectedProduct = {
   ],
 };
 
+const similarProducts = [
+  {
+    _id: 1,
+    name: "Product 1",
+    price: 100,
+    images: [{ url: "https://picsum.photos/500/500?random=1" }],
+    altText: "Product 1",
+  },
+  {
+    _id: 2,
+    name: "Product 2",
+    price: 100,
+    images: [{ url: "https://picsum.photos/500/500?random=2" }],
+    altText: "Product 2 ",
+  },
+  {
+    _id: 1,
+    name: "Product 3",
+    price: 100,
+    images: [{ url: "https://picsum.photos/500/500?random=3" }],
+    altText: "Product 3",
+  },
+  {
+    _id: 1,
+    name: "Product 4",
+    price: 100,
+    altText: "Product 4",
+
+    images: [{ url: "https://picsum.photos/500/500?random=4" }],
+  },
+];
+
 const ProductDetails = () => {
   const [mainImage, setMainImage] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   useEffect(() => {
     if (selectedProduct?.images?.length > 0) {
       setMainImage(selectedProduct.images[0].url);
     }
   }, [selectedProduct]);
+
+  const handleQuantityChange = (action) => {
+    if (action === "plus") setQuantity((prev) => prev + 1);
+    if (action === "minus" && quantity > 1) setQuantity((prev) => prev - 1);
+  };
+  const handleAddToCart = () => {
+    if (!selectedSize || !selectedColor) {
+      toast.error("Please select a size and color before adding to cart", {
+        duration: 1000,
+      });
+      return;
+    }
+    setIsButtonDisabled(true);
+    setTimeout(() => {
+      toast.success("Product added to cart !", {
+        duration: 1000,
+      });
+      setIsButtonDisabled(false);
+    }, 500);
+  };
   return (
     <div className="p-6">
       <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg">
@@ -89,7 +147,12 @@ const ProductDetails = () => {
                 {selectedProduct.colors.map((color) => (
                   <button
                     key={color}
-                    className="w-8 h-8 rounded-full border"
+                    onClick={() => setSelectedColor(color)}
+                    className={`w-8 h-8 rounded-full border ${
+                      selectedColor === color
+                        ? "border-4 border-black"
+                        : "border-gray-300"
+                    }`}
                     style={{
                       backgroundColor: color.toLocaleLowerCase(),
                       filter: "brightness(0.5)",
@@ -103,7 +166,13 @@ const ProductDetails = () => {
               <p className="text-gray-700">Size:</p>
               <div className="flex gap-2 mt-2">
                 {selectedProduct.sizes.map((size) => (
-                  <button key={size} className="px-4 py-2 rounded border">
+                  <button
+                    key={size}
+                    className={`px-4 py-2 rounded border ${
+                      selectedSize === size ? "bg-black text-white" : ""
+                    }`}
+                    onClick={() => setSelectedSize(size)}
+                  >
                     {size}
                   </button>
                 ))}
@@ -112,17 +181,31 @@ const ProductDetails = () => {
             <div className="mb-6">
               <p className="text-gray-700">Quantity:</p>
               <div className="flex items-center space-x-4 mt-2">
-                <button className="px-2 py-1 bg-gray-200 rounded text-lg">
+                <button
+                  onClick={() => handleQuantityChange("minus")}
+                  className="px-2 py-1 bg-gray-200 rounded text-lg"
+                >
                   -
                 </button>
-                <span className="text-lg">1</span>
-                <button className="px-2 py-1 bg-gray-200 rounded text-lg">
+                <span className="text-lg">{quantity}</span>
+                <button
+                  className="px-2 py-1 bg-gray-200 rounded text-lg"
+                  onClick={() => handleQuantityChange("plus")}
+                >
                   +
                 </button>
               </div>
             </div>
-            <button className="bg-black text-white py-2 px-6 rounded w-full mb-4">
-              ADD TO CART
+            <button
+              onClick={handleAddToCart}
+              disabled={isButtonDisabled}
+              className={`bg-black text-white py-2 px-6 rounded w-full mb-4 ${
+                isButtonDisabled
+                  ? "cursor-not-allowed opacity-50"
+                  : "hover:bg-gray-900"
+              }`}
+            >
+              {isButtonDisabled ? "Adding..." : "ADD TO CART"}
             </button>
             <div className="mt-10 text-gray-700">
               <h3 className="text-xl font-bold mb-4">Characteristics:</h3>
@@ -140,6 +223,12 @@ const ProductDetails = () => {
               </table>
             </div>
           </div>
+        </div>
+        <div className="mt-20">
+          <h2 className="text-2xl text-center font-medium mb-4">
+            You May Also Lke
+          </h2>
+          <ProductGrid products={similarProducts} />
         </div>
       </div>
     </div>

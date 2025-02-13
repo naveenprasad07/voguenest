@@ -43,7 +43,7 @@ const OrderManagement = () => {
                   <td className="p-4">
                     <select
                       value={order.status}
-                      onClick={(e) =>
+                      onChange={(e) =>
                         handleStatusChange(order._id, e.target.value)
                       }
                       className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"

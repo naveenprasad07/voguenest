@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 
 package-lock.json
-
+# Ignore all .env files inside subdirectories
+**/.env

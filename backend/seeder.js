@@ -16,7 +16,7 @@ const seedData = async () => {
   try {
     // Clear existing data
     await Product.deleteMany();
-    await User.deleteMany();
+    // await User.deleteMany();
     await Cart.deleteMany();
 
     // Create a default admin User

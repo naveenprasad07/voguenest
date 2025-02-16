@@ -19,6 +19,10 @@ const checkoutItemSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
   },
   { _id: false }
 );
@@ -70,4 +74,4 @@ const checkoutSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-mongoose.model("Checkout", checkoutSchema);
+export default mongoose.model("Checkout", checkoutSchema);

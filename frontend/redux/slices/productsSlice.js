@@ -30,7 +30,7 @@ export const fetchProductsByFilters = createAsyncThunk(
     if (material) query.append("material", material);
     if (brand) query.append("brand", brand);
     if (limit) query.append("limit", limit);
-    // if (collection) query.append("collection", collection);
+    if (category) query.append("category", category);
     const response = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/products?${query.toString()}`
     );
@@ -136,17 +136,51 @@ const productSlice = createSlice({
         state.error = action.error.message;
       })
       // Handle fetching single product details
-      .addCase(fetchProductsByFilters.pending, (state) => {
+      .addCase(fetchProductDetails.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProductsByFilters.fulfilled, (state, action) => {
+      .addCase(fetchProductDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = Array.isArray(action.payload) ? action.payload : [];
+        state.selectedProduct = action.payload;
       })
-      .addCase(fetchProductsByFilters.rejected, (state, action) => {
+      .addCase(fetchProductDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      // Handle updating product
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedProduct = action.payload;
+        const index = state.products.findIndex(
+          (product) => product._id === updateProduct._id
+        );
+        if (index !== -1) {
+          state.products[index] = updatedProduct;
+        }
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchSimilarProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSimilarProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+      .addCase(fetchSimilarProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
   },
 });
+
+export const { setFilters, clearFilters } = productSlice.actions;
+export default productSlice.reducer;

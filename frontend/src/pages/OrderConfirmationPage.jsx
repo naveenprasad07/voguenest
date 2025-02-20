@@ -1,32 +1,7 @@
-const checkout = {
-  _id: "12323",
-  createdAt: new Date(),
-  checkoutItems: [
-    {
-      productId: "1",
-      name: "Jacket",
-      color: "black",
-      size: "M",
-      price: 150,
-      quantity: 1,
-      image: "https://picsum.photos/150?random=1",
-    },
-    {
-      productId: "2",
-      name: "T-Shirt",
-      color: "black",
-      size: "M",
-      price: 120,
-      quantity: 2,
-      image: "https://picsum.photos/150?random=2",
-    },
-  ],
-  shippingAddress: {
-    address: "123 Fashion Street",
-    city: "New York",
-    country: "USA",
-  },
-};
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart } from "../../redux/slices/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const calculateEstimatedDelivery = (createdAt) => {
   const orderDate = new Date(createdAt);
@@ -35,6 +10,20 @@ const calculateEstimatedDelivery = (createdAt) => {
 };
 
 const OrderConfirmationPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { checkout } = useSelector((state) => state.checkout);
+
+  // Clear the cart when the order is confirmed
+  useEffect(() => {
+    if (checkout && checkout._id) {
+      dispatch(clearCart());
+      localStorage.removeItem("cart");
+    } else {
+      navigate("/my-order");
+    }
+  }, [checkout, dispatch, navigate]);
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white">
       <h1 className="text-4xl font-bold text-center text-emerald-700 mb-8">

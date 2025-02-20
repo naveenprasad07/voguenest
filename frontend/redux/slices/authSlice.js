@@ -40,7 +40,7 @@ export const loginUser = createAsyncThunk(
 
 // Async Thunk for User Registration
 export const registerUser = createAsyncThunk(
-  "auth/loginUser",
+  "auth/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
@@ -73,33 +73,33 @@ const authSlice = createSlice({
       state.guestId = `guest_${new Date().getTime()}`;
       localStorage.setItem("guestId", state.guestId);
     },
-    extraReducers: (builder) => {
-      builder
-        .addCase(loginUser.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
-        .addCase(loginUser.fulfilled, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        })
-        .addCase(loginUser.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        })
-        .addCase(registerUser.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
-        .addCase(registerUser.fulfilled, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        })
-        .addCase(registerUser.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        });
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      });
   },
 });
 

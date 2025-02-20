@@ -193,7 +193,7 @@ const cartSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(mergeCart.fulfilled, (state) => {
+      .addCase(mergeCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cart = action.payload;
         saveCartStorage(action.payload);

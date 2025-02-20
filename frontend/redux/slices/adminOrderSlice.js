@@ -94,7 +94,7 @@ const adminOrderSlice = createSlice({
         }, 0);
         state.totalSales = totalSales;
       })
-      .addCase(fetchAllOrders.pending, (state, action) => {
+      .addCase(fetchAllOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       })

@@ -101,7 +101,7 @@ export const removeFromCart = createAsyncThunk(
 );
 
 // Merge guest cart into user cart
-export const mergetCart = createAsyncThunk(
+export const mergeCart = createAsyncThunk(
   "cart/mergeCart",
   async ({ guestId, user }, { rejectWithValue }) => {
     try {
@@ -141,8 +141,8 @@ const cartSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchCart.fulfilled, (state) => {
-        state.loading = true;
-        state.error = action.payload;
+        state.loading = false;
+        state.cart = action.payload;
         saveCartStorage(action.payload);
       })
       .addCase(fetchCart.rejected, (state, action) => {
@@ -153,9 +153,9 @@ const cartSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(addToCart.fulfilled, (state) => {
-        state.loading = true;
-        state.error = action.payload;
+      .addCase(addToCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cart = action.payload;
         saveCartStorage(action.payload);
       })
       .addCase(addToCart.rejected, (state, action) => {
@@ -166,9 +166,9 @@ const cartSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(updateCartItemQuantity.fulfilled, (state) => {
-        state.loading = true;
-        state.error = action.payload;
+      .addCase(updateCartItemQuantity.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cart = action.payload;
         saveCartStorage(action.payload);
       })
       .addCase(updateCartItemQuantity.rejected, (state, action) => {
@@ -180,25 +180,25 @@ const cartSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(removeFromCart.fulfilled, (state) => {
-        state.loading = true;
-        state.error = action.payload;
+      .addCase(removeFromCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cart = action.payload;
         saveCartStorage(action.payload);
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to remove item ";
       })
-      .addCase(mergetCart.pending, (state) => {
+      .addCase(mergeCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(mergetCart.fulfilled, (state) => {
-        state.loading = true;
-        state.error = action.payload;
+      .addCase(mergeCart.fulfilled, (state) => {
+        state.loading = false;
+        state.cart = action.payload;
         saveCartStorage(action.payload);
       })
-      .addCase(mergetCart.rejected, (state, action) => {
+      .addCase(mergeCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to merge cart ";
       });

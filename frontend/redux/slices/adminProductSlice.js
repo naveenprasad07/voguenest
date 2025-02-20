@@ -81,7 +81,7 @@ const adminProducts = createSlice({
         state.loading = true;
         state.products = action.payload;
       })
-      .addCase(fetchAdminProducts.pending, (state, action) => {
+      .addCase(fetchAdminProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })

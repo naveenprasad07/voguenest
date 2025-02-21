@@ -17,7 +17,7 @@ const MyOrdersPage = () => {
   };
 
   if (loading) return <p>Loading ...</p>;
-  if (error) return <p>Error ...</p>;
+  if (error) return <p>Error ...{error}</p>;
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">

@@ -30,7 +30,7 @@ export const updateOrderStatus = createAsyncThunk(
   "adminOrders/updateOrderStatus",
   async ({ id, status }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
+      const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders/${id}`,
         { status },
         {
@@ -101,6 +101,8 @@ const adminOrderSlice = createSlice({
       // Update Order Status
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         const updateOrder = action.payload;
+        console.log(action.payload);
+
         const orderIndex = state.orders.findIndex(
           (order) => order._id === updateOrder._id
         );

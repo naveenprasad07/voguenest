@@ -11,7 +11,7 @@ export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
       },
     }
   );
-  response.data;
+  return response.data;
 });
 
 // Add the crate user action
@@ -48,7 +48,7 @@ export const updateUser = createAsyncThunk(
         },
       }
     );
-    response.data;
+    return response.data.user;
   }
 );
 
@@ -83,17 +83,21 @@ const adminSlice = createSlice({
         state.users = action.payload;
       })
       .addCase(fetchUsers.rejected, (state) => {
-        state.loading = true;
+        state.loading = false;
         state.error = action.error.message;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         const updatedUser = action.payload;
+
         const userIndex = state.users.findIndex(
           (user) => user._id === updatedUser._id
         );
         if (userIndex !== -1) {
-          state.users[userIndex] = updateUser;
+          state.users[userIndex] = updatedUser;
         }
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.error = action.error.message;
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.users = state.users.filter((user) => user._id !== action.payload);

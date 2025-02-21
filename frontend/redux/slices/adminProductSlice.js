@@ -38,7 +38,7 @@ export const createProduct = createAsyncThunk(
 export const updateProduct = createAsyncThunk(
   "adminProducts/updateProduct",
   async ({ id, productData }) => {
-    const response = await axios.get(
+    const response = await axios.put(
       `${API_URL}/api/admin/products/${id}`,
       productData,
       {
@@ -69,7 +69,7 @@ const adminProducts = createSlice({
   initialState: {
     products: [],
     loading: false,
-    error: null,
+    error: "",
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -78,7 +78,7 @@ const adminProducts = createSlice({
         state.loading = true;
       })
       .addCase(fetchAdminProducts.fulfilled, (state, action) => {
-        state.loading = true;
+        state.loading = false;
         state.products = action.payload;
       })
       .addCase(fetchAdminProducts.rejected, (state, action) => {
@@ -89,6 +89,9 @@ const adminProducts = createSlice({
       .addCase(createProduct.fulfilled, (state, action) => {
         state.products.push(action.payload);
       })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
       // Update Product
       .addCase(updateProduct.fulfilled, (state, action) => {
         const index = state.products.findIndex(
@@ -98,11 +101,17 @@ const adminProducts = createSlice({
           state.products[index] = action.payload;
         }
       })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
       // Delete a Product
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter(
           (product) => product._id !== action.payload
         );
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.error = action.error.message;
       });
   },
 });

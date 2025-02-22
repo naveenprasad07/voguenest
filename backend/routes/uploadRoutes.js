@@ -9,7 +9,7 @@ dotenv.config();
 const router = express.Router();
 
 //Cloudinary configuration
-cloudinary.config({
+cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
@@ -27,7 +27,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     // Function to handle the stream upload to Cloudinary
     const streamUpload = (fileBuffer) => {
       return new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream((error, result) => {
+        const stream = cloudinary.v2.uploader.upload_stream((error, result) => {
           if (result) {
             resolve(result);
           } else {
@@ -44,7 +44,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     res.json({ imageUrl: result.secure_url });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: "Vankkama da mapla Error" });
   }
 });
 

@@ -65,6 +65,7 @@ router.post("/", protect, admin, async (req, res) => {
 // @access Private / Admin
 router.put("/:id", protect, admin, async (req, res) => {
   try {
+    console.log("Routela irukken");
     const {
       name,
       description,
@@ -86,6 +87,9 @@ router.put("/:id", protect, admin, async (req, res) => {
       weight,
       sku,
     } = req.body;
+
+    console.log(req.body);
+
     // Find prouct by ID
 
     const product = await Product.findById(req.params.id);

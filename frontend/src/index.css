@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@tailwind utilities;
 
 @theme {
   --color-rabbit-red: #ea2e0e;

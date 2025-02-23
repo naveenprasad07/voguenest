@@ -101,8 +101,6 @@ const adminOrderSlice = createSlice({
       // Update Order Status
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         const updateOrder = action.payload;
-        console.log(action.payload);
-
         const orderIndex = state.orders.findIndex(
           (order) => order._id === updateOrder._id
         );
@@ -115,6 +113,13 @@ const adminOrderSlice = createSlice({
         state.orders = state.orders.filter(
           (order) => order._id !== action.payload
         );
+      })
+      .addCase(updateOrderStatus.rejected, (state, action) => {
+        state.error =
+          action.payload?.message || "Failed to update order status";
+      })
+      .addCase(deleteOrder.rejected, (state, action) => {
+        state.error = action.payload?.message || "Failed to delete order";
       });
   },
 });

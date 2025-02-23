@@ -2,8 +2,6 @@
 
 🚀 **VogueNest** is a modern **MERN stack** e-commerce platform designed for a seamless online dress shopping experience. Built with **MongoDB, Express.js, React, and Node.js**, it offers a **responsive UI, secure authentication, and smooth checkout**.
 
-![VogueNest Banner](#) _(Add a project screenshot or GIF here!)_
-
 ## 🌍 Live Demo
 
 🔗 **Live Site:** [VogueNest](https://voguenest.vercel.app/)

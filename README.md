@@ -14,7 +14,7 @@
 ✅ **Secure Payments** – Integrated with **PayPal (US-based sandbox)**  
 ✅ **Order Tracking** – View past orders and statuses  
 ✅ **Responsive UI** – Works on all devices  
-✅ **Admin Dashboard** – Manage products & orders
+✅ **Admin Dashboard** – Manage products & orders  
 
 ## 🛠️ Tech Stack
 
@@ -29,4 +29,4 @@
 
 🔹 **Infinite Loading Issue** – Avoid importing a component into itself in JSX!  
 🔹 **PayPal Error in India** – Switch sandbox origin to the **USA** for proper functionality.  
-🔹 **Debugging Nightmare?** – Double-check imports and typos before spending hours debugging! 😅
+🔹 **Debugging Nightmare?** – Double-check imports and typos before spending hours debugging! 😅  
